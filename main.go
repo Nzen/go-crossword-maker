@@ -1,12 +1,11 @@
 package main
 
 import (
-	"./generate"
-	"./grid"
-	"./words"
+	"github.com/alokmenghrajani/go-crossword-maker/grid"
+	"github.com/alokmenghrajani/go-crossword-maker/generate"
+	"github.com/alokmenghrajani/go-crossword-maker/words"
 	"fmt"
-
-	"gopkg.in/alecthomas/kingpin.v2"
+	"github.com/alecthomas/kingpin/v2"
 )
 
 /**

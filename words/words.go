@@ -1,7 +1,7 @@
 package words
 
 import (
-	. "../utils"
+	"github.com/alokmenghrajani/go-crossword-maker/utils"
 	"bufio"
 	"fmt"
 	"io"
@@ -33,7 +33,7 @@ func Load(filename string) *Words {
 	w := New()
 
 	f, err := os.Open(filename)
-	PanicIfNotNil(err)
+	utils.PanicIfNotNil(err)
 	defer f.Close()
 	r := bufio.NewReader(f)
 	inHeader := true
@@ -42,7 +42,7 @@ func Load(filename string) *Words {
 		if err == io.EOF {
 			break
 		}
-		PanicIfNotNil(err)
+		utils.PanicIfNotNil(err)
 		if strings.HasPrefix(line, "--------") {
 			inHeader = false
 		} else if !inHeader {
@@ -87,11 +87,11 @@ func (words *Words) IsUsed(word string) bool {
 }
 
 func (words *Words) MarkUsed(word string) {
-	PanicIfFalse(!words.used[word], fmt.Sprintf("expecting %s to be false", word))
+	utils.PanicIfFalse(!words.used[word], fmt.Sprintf("expecting %s to be false", word))
 	words.used[word] = true
 }
 
 func (words *Words) MarkUnused(word string) {
-	PanicIfFalse(words.used[word], fmt.Sprintf("expecting %s to be true", word))
+	utils.PanicIfFalse(words.used[word], fmt.Sprintf("expecting %s to be true", word))
 	words.used[word] = false
 }

@@ -1,7 +1,7 @@
 package grid
 
 import (
-	. "../utils"
+	"github.com/alokmenghrajani/go-crossword-maker/utils"
 	"fmt"
 )
 
@@ -163,7 +163,7 @@ func (g *Grid) placeDown(x, y int, word string) (startBlack bool, endBlack bool,
 	}
 	for i := 0; i < len(word); i++ {
 		if t, ok := g.grid[x][y+i].(charCell); ok {
-			PanicIfFalse(t.isRight, "expecting isRight to be true")
+			utils.PanicIfFalse(t.isRight, "expecting isRight to be true")
 			t.isDown = true
 			g.grid[x][y+i] = t
 		} else {
@@ -203,7 +203,7 @@ func (g *Grid) placeRight(x, y int, word string) (startBlack bool, endBlack bool
 	}
 	for i := 0; i < len(word); i++ {
 		if t, ok := g.grid[x+i][y].(charCell); ok {
-			PanicIfFalse(t.isDown, "expecting isDown to be true")
+			utils.PanicIfFalse(t.isDown, "expecting isDown to be true")
 			t.isRight = true
 			g.grid[x+i][y] = t
 		} else {
@@ -234,9 +234,9 @@ func (g *Grid) unplaceDown(x, y int, word string, startBlack bool, endBlack bool
 	// Check that word was placed at x, y
 	for i := 0; i < len(word); i++ {
 		t, ok := g.grid[x][y+i].(charCell)
-		PanicIfFalse(ok, fmt.Sprintf("expecting charCell at x, y+i; got: ", x, y, i, g.grid[x][y+i]))
-		PanicIfFalse(t.char == word[i], fmt.Sprintf("expecting specific char: %c != %c", t.char, word[i]))
-		PanicIfFalse(t.isDown, "expecting isDown to be set")
+		utils.PanicIfFalse(ok, fmt.Sprintf("expecting charCell at x, y+i; got: ", x, y, i, g.grid[x][y+i]))
+		utils.PanicIfFalse(t.char == word[i], fmt.Sprintf("expecting specific char: %c != %c", t.char, word[i]))
+		utils.PanicIfFalse(t.isDown, "expecting isDown to be set")
 	}
 	// Revert placeDown
 	if startBlack {
@@ -260,9 +260,9 @@ func (g *Grid) unplaceRight(x, y int, word string, startBlack bool, endBlack boo
 	// Check that word was placed at x, y
 	for i := 0; i < len(word); i++ {
 		t, ok := g.grid[x+i][y].(charCell)
-		PanicIfFalse(ok, fmt.Sprintf("expecting charCell at %d+%d, %d; got: ", x, i, y, g.grid[x+i][y]))
-		PanicIfFalse(t.char == word[i], fmt.Sprintf("expecting specific char: %c != %c", t.char, word[i]))
-		PanicIfFalse(t.isRight, "expecting isRight to be set")
+		utils.PanicIfFalse(ok, fmt.Sprintf("expecting charCell at %d+%d, %d; got: ", x, i, y, g.grid[x+i][y]))
+		utils.PanicIfFalse(t.char == word[i], fmt.Sprintf("expecting specific char: %c != %c", t.char, word[i]))
+		utils.PanicIfFalse(t.isRight, "expecting isRight to be set")
 	}
 	// Revert placeDown
 	if startBlack {
@@ -294,7 +294,7 @@ func (g *Grid) PartialDown() []Partial {
 		for j := 0; j < g.Size; j++ {
 			t, ok := g.grid[i][j].(charCell)
 			if ok && !t.isDown {
-				PanicIfFalse(t.isRight, "either isDown or isRight should be set")
+				utils.PanicIfFalse(t.isRight, "either isDown or isRight should be set")
 				partial += fmt.Sprintf("%c", t.char)
 			} else {
 				if len(partial) > 1 {
@@ -321,7 +321,7 @@ func (g *Grid) PartialRight() []Partial {
 		for i := 0; i < g.Size; i++ {
 			t, ok := g.grid[i][j].(charCell)
 			if ok && !t.isRight {
-				PanicIfFalse(t.isDown, "either isDown or isRight should be set")
+				utils.PanicIfFalse(t.isDown, "either isDown or isRight should be set")
 				partial += fmt.Sprintf("%c", t.char)
 			} else {
 				if len(partial) > 1 {

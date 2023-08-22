@@ -1,8 +1,8 @@
 package generate
 
 import (
-	"../grid"
-	"../words"
+	"github.com/alokmenghrajani/go-crossword-maker/grid"
+	"github.com/alokmenghrajani/go-crossword-maker/words"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

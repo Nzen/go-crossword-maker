@@ -1,9 +1,9 @@
 package generate
 
 import (
-	"../grid"
-	. "../utils"
-	"../words"
+	"github.com/alokmenghrajani/go-crossword-maker/grid"
+	"github.com/alokmenghrajani/go-crossword-maker/utils"
+	"github.com/alokmenghrajani/go-crossword-maker/words"
 	"fmt"
 )
 
@@ -88,7 +88,7 @@ func phaseTwo(w *words.Words, g *grid.Grid, score int) bool {
 	for partial, ngrams := range partialDown {
 		if len(ngrams) == 1 {
 			sb, eb, ok := g.Place(partial.X, partial.Y-ngrams[0].Offset, grid.DOWN, ngrams[0].Word)
-			PanicIfFalse(ok, "partialDown contains invalid data")
+			utils.PanicIfFalse(ok, "partialDown contains invalid data")
 			w.MarkUsed(ngrams[0].Word)
 			valid := phaseTwo(w, g, score)
 			g.Unplace(partial.X, partial.Y-ngrams[0].Offset, grid.DOWN, ngrams[0].Word, sb, eb)
@@ -99,7 +99,7 @@ func phaseTwo(w *words.Words, g *grid.Grid, score int) bool {
 	for partial, ngrams := range partialRight {
 		if len(ngrams) == 1 {
 			sb, eb, ok := g.Place(partial.X-ngrams[0].Offset, partial.Y, grid.RIGHT, ngrams[0].Word)
-			PanicIfFalse(ok, "partialRight contains invalid data")
+			utils.PanicIfFalse(ok, "partialRight contains invalid data")
 			w.MarkUsed(ngrams[0].Word)
 			valid := phaseTwo(w, g, score)
 			g.Unplace(partial.X-ngrams[0].Offset, partial.Y, grid.RIGHT, ngrams[0].Word, sb, eb)
@@ -113,7 +113,7 @@ func phaseTwo(w *words.Words, g *grid.Grid, score int) bool {
 		valid := false
 		for _, ngram := range ngrams {
 			sb, eb, ok := g.Place(partial.X, partial.Y-ngram.Offset, grid.DOWN, ngram.Word)
-			PanicIfFalse(ok, "partialDown contains invalid data")
+			utils.PanicIfFalse(ok, "partialDown contains invalid data")
 			w.MarkUsed(ngram.Word)
 			valid = valid || phaseTwo(w, g, score)
 			g.Unplace(partial.X, partial.Y-ngram.Offset, grid.DOWN, ngram.Word, sb, eb)
@@ -125,7 +125,7 @@ func phaseTwo(w *words.Words, g *grid.Grid, score int) bool {
 		valid := false
 		for _, ngram := range ngrams {
 			sb, eb, ok := g.Place(partial.X-ngram.Offset, partial.Y, grid.RIGHT, ngram.Word)
-			PanicIfFalse(ok, "partialRight contains invalid data")
+			utils.PanicIfFalse(ok, "partialRight contains invalid data")
 			w.MarkUsed(ngram.Word)
 			valid = valid || phaseTwo(w, g, score)
 			g.Unplace(partial.X-ngram.Offset, partial.Y, grid.RIGHT, ngram.Word, sb, eb)
